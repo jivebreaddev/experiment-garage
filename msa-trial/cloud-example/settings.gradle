@@ -1,0 +1,6 @@
+rootProject.name = 'simon-park-licensing-company'
+include ':license'
+include ':license-config'
+include ':eureka'
+include ':organization'
+include ':spring-gateway'

@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+server:
+  port: 8081
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eurekaserver:8070/eureka/

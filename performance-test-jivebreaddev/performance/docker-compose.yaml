@@ -1,0 +1,45 @@
+version: '3'
+services:
+  k6-client:
+    image: grafana/k6:latest
+    ports:
+      - "6565:6565"
+    volumes:
+      - ./test.js:/test.js
+      - ./value/summary.html:/value/summary.html
+    command: run /test.js --out json=test.json --out influxdb=http://127.0.0.1:8086/myk6db
+    network_mode: host
+#  influxdb:
+#    image: bitnami/influxdb:1.8.5
+#    container_name: influxdb
+#    ports:
+#      - "8086:8086"
+#    environment:
+#      - INFLUXDB_ADMIN_USER_PASSWORD=1234
+#      - INFLUXDB_ADMIN_USER_TOKEN=1234
+#      - INFLUXDB_HTTP_AUTH_ENABLED=false
+#      - INFLUXDB_DB=myk6db
+#    network_mode: host
+#  granafa:
+#    image: grafana/grafana
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - ./grafana-data:/var/lib/grafana
+#      - ./grafana/provisioning/:/etc/grafana/provisioning/
+#    user: "root"
+#    environment:
+#      - GF_AUTH_ANONYMOUS_ENABLED=true
+#      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+#      - GF_AUTH_DISABLE_LOGIN_FORM=true
+#    expose:
+#      - "3000"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.5'
+#          memory: 256M
+#        reservations:
+#          cpus: '0.5'
+#          memory: 256M
+#    network_mode: host

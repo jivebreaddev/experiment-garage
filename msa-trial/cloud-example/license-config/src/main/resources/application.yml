@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: config-server # 컨피그 서버 애플리케이션 이름
+  profiles:
+    active: native # 어디에다가 스프링 프로파일을 정리할 지 저장 git, vault 같은 설정값을 지원
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+        native:
+          search-locations: classpath:/config  # 해당 config 폴더 하위의 설정 파일에서 저장 /src/main/resources/config
+server:
+  port: 8071 # 서버 포트 이름
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

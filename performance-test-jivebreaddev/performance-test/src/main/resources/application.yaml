@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: performance-test
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

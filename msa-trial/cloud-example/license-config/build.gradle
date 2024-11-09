@@ -1,0 +1,39 @@
+ext {
+    springBootVersion = rootProject.ext.springBootVersion
+    springCloudVersion = rootProject.ext.springCloudVersion
+    jibContainerVersion = rootProject.ext.jibContainerVersion
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-config-server'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.ext.springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+jib {
+    from {
+        image = 'amazoncorretto:21-alpine'
+    }
+    to {
+        image = "jivebreaddev/license-config"
+        tags = ['latest']
+    }
+    container {
+
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        jvmFlags = ['-Dspring.profiles.active=prod', '-XX:+UseContainerSupport', '-Dserver.port=8071', '-Dfile.encoding=UTF-8']
+        ports = ['8071']
+        entrypoint = ['java', '-cp', '/app/resources:/app/classes:/app/libs/*', 'com.example.licenseconfig.LicenseConfigApplication']
+    }
+}
