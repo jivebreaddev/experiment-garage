@@ -19,6 +19,7 @@ services:
       retries: 5
   config-server:
     image: jivebreaddev/license-config:latest
+    restart: on-failure
     ports:
       - "8071:8071"
     networks:
@@ -27,9 +28,10 @@ services:
           - "configserver"
   licensing-service:
     image: jivebreaddev/license:latest
+    restart: on-failure
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_URI: "http://config-server:8071"
       CONFIGSERVER_PORT:   "8071"
       DATABASESERVER_PORT: "5432"
     depends_on:
@@ -43,9 +45,10 @@ services:
       - backend
   organization:
     image: jivebreaddev/organization:latest
+    restart: on-failure
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_URI: "http://config-server:8071"
       CONFIGSERVER_PORT: "8071"
       DATABASESERVER_PORT: "5432"
     depends_on:
@@ -57,8 +60,10 @@ services:
       - "8081:8081"
     networks:
       - backend
+
   eureka-server:
     image: jivebreaddev/eureka:latest
+    restart: on-failure
     ports:
       - "8070:8070"
     depends_on:
@@ -70,6 +75,28 @@ services:
       backend:
         aliases:
           - "eurekaserver"
+  gateway-server:
+    image: jivebreaddev/spring-gateway
+    ports:
+      - "8072:8072"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8072"
+      CONFIGSERVER_URI: "http://config-server:8071"
+      EUREKASERVER_URI: "http://eureka-server:8070/eureka/"
+      EUREKASERVER_PORT: "8070"
+      CONFIGSERVER_PORT: "8071"
+    depends_on:
+      database:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "gateway"
 networks:
   backend:
     driver: bridge
