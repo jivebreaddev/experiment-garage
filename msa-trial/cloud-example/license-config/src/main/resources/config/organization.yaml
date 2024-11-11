@@ -15,6 +15,11 @@ spring:
     openfeign:
       micrometer:
         enabled: true
+  sleuth:
+    sampler:
+      percentage: 1
+  zipkin:
+    baseUrl: http://zipkin:9411
 server:
   port: 8081
 

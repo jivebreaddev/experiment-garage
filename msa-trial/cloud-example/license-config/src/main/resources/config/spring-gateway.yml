@@ -31,6 +31,11 @@ spring:
     openfeign:
       micrometer:
         enabled: true
+  sleuth:
+    sampler:
+      percentage: 1
+  zipkin:
+    baseUrl: http://zipkin:9411
 management:
   endpoints:
     web:
