@@ -28,9 +28,17 @@ spring:
           filters:
             - RewritePath=/license/(?<path>.*), /$\{path}
             - RemoveRequestHeader= Cookie,Set-Cookie
-
+    openfeign:
+      micrometer:
+        enabled: true
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  tracing:
+    propagation:
+      type: b3
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

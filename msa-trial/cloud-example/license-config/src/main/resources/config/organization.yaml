@@ -11,7 +11,10 @@ spring:
     driverClassName: org.postgresql.Driver
     testWhileIdle: true
     validationQuery: SELECT 1
-
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
 server:
   port: 8081
 
@@ -22,7 +25,9 @@ management:
       exposure:
         include: "*"
     enabled-by-default: true
-
+  tracing:
+    propagation:
+      type: b3
 eureka:
   instance:
     preferIpAddress: true
@@ -31,3 +36,6 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://eurekaserver:8070/eureka/
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
