@@ -1,6 +1,19 @@
 rootProject.name = 'simon-park-licensing-company'
-include ':license'
-include ':license-config'
-include ':eureka'
-include ':organization'
-include ':spring-gateway'
+include 'license:license-core'
+include 'license:license-api'
+
+include 'organization:organization-api'
+include 'organization:organization-core'
+
+include 'infra:infra-db-license'
+include 'infra:infra-db-organization'
+
+include 'support:logging'
+include 'support:monitoring'
+include 'support:spring-gateway'
+include 'support:eureka'
+include 'support:license-config'
+
+include 'client:client-license'
+include 'client:client-organization'
+

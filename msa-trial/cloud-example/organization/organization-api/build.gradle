@@ -1,0 +1,49 @@
+
+ext {
+    springBootVersion = rootProject.ext.springBootVersion
+    springCloudVersion = rootProject.ext.springCloudVersion
+    jibContainerVersion = rootProject.ext.jibContainerVersion
+}
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-config"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+
+    implementation project(":organization:organization-core")
+    implementation project(":support:monitoring")
+    implementation project(":support:logging")
+    implementation project(":infra:infra-db-organization")
+    implementation project(":client:client-organization")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+jib {
+    from {
+        image = 'amazoncorretto:21-alpine'
+    }
+    to {
+        image = "jivebreaddev/organization"
+        tags = ['latest']
+    }
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        jvmFlags = ['-Dspring.profiles.active=prod', '-XX:+UseContainerSupport', '-Dserver.port=8080', '-Dfile.encoding=UTF-8']
+        ports = ['8080']
+        entrypoint = ['java', '-cp', '/app/resources:/app/classes:/app/libs/*', 'org.window.organization.OrganizationApplication']
+
+    }
+}
