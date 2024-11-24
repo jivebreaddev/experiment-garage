@@ -13,6 +13,12 @@ public class Organization {
 
     String contactPhone;
 
+    String licenseId;
+
+    public void setLicenseId(String licenseId) {
+        this.licenseId = licenseId;
+    }
+
     public String getId() {
         return id;
     }

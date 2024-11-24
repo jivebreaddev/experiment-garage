@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import domain.Organization;
 import org.window.organization.service.OrganizationService;
+import org.window.organization.service.RegistrationRequestDto;
 
 @RestController
 @RequestMapping(value = "/v1/organization")
@@ -20,9 +21,10 @@ public class OrganizationController {
         return ResponseEntity.ok(service.findById(organizationId));
     }
 
-    @RequestMapping(value = "/{organizationId}", method = RequestMethod.PUT)
-    public void updateOrganization(@PathVariable("organizationId") String id, @RequestBody Organization organization) {
-        service.update(organization);
+    @RequestMapping(value = "/v1/organization/license/register", method = RequestMethod.POST)
+    public void updateOrganization(@RequestBody RegistrationRequestDto request) {
+
+        service.update(request);
     }
 
     @PostMapping

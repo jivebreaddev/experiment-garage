@@ -31,8 +31,12 @@ public class OrganizationService {
 
     }
 
-    public void update(Organization organization) {
-        repository.save(organization);
+    public void update(RegistrationRequestDto requestDto) {
+        Organization opt = repository.findById(requestDto.organizationId())
+                .orElseThrow(RuntimeException::new);
+        opt.setLicenseId(requestDto.licenseId());
+
+        repository.save(opt);
     }
 
     public void delete(String organizationId) {

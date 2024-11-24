@@ -2,14 +2,17 @@ package org.window.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.window.LicenseRegistrationRequestDto;
+import org.window.LicenseRegistrationResponseDto;
 
 @FeignClient("organization")
-public class OrganizationFeignClient {
+interface OrganizationFeignClient {
     @RequestMapping(
-            method= RequestMethod.GET,
-            value="/v1/organization/{organizationId}",
+            method= RequestMethod.POST,
+            value="/v1/organization/license/register",
             consumes="application/json")
-    Organization getOrganization(@PathVariable("organizationId") String organizationId);
+    LicenseRegistrationResponseDto registerLicenseId(@RequestBody LicenseRegistrationRequestDto requestDto);
 }
