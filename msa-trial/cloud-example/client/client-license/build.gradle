@@ -8,4 +8,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'io.github.openfeign:feign-micrometer'
+
+    testRuntimeOnly 'org.postgresql:postgresql:42.7.4'
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+
 }
