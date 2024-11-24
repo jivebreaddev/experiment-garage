@@ -5,7 +5,7 @@ spring:
     import: "configserver:"  # ???  ???? ??? ????? ??
   cloud:
     config:
-      uri: http://config-server:8071 # config ?? ??
+      uri: http://localhost:8071 # config ?? ??
       fail-fast: true
   profiles:
     active: dev

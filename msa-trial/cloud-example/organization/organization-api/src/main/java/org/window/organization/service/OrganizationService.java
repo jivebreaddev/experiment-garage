@@ -19,7 +19,8 @@ public class OrganizationService {
     }
 
     public Organization findById(String organizationId) {
-        Organization opt = repository.findById(organizationId).orElseThrow(() -> new RuntimeException());
+        Organization opt = repository.findById(organizationId)
+                .orElseThrow(RuntimeException::new);
         return opt;
     }
 
