@@ -19,6 +19,8 @@ public abstract class AbstractContainerBaseTest {
     private static ConfigurationContainer configurationContainer;
     private static Network sharedNetwork = Network.newNetwork();
 
+    public static final String DB_INIT_SQL = "db/init.sql";
+
     // 컨테이너들을 설정합니다.
     // 1. shared Network 설정
     // 2. db credential 설정
@@ -30,7 +32,8 @@ public abstract class AbstractContainerBaseTest {
                 .withUsername(POSTGRES_USERNAME)
                 .withPassword(POSTGRES_PASSWORD)
                 .withDatabaseName(POSTGRES_DATABASE)
-                .withNetwork(sharedNetwork);
+                .withNetwork(sharedNetwork)
+                .withInitScript(DB_INIT_SQL);
         postgreSQLContainer.start();
 
         configurationContainer = new ConfigurationContainer(TestContainerImage

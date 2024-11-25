@@ -1,0 +1,9 @@
+create table testUser.BOOKS
+(
+    BOOK_SEQ NUMBER(20),
+    TITLE    VARCHAR2(100),
+    TEXT_1   VARCHAR2(100)
+);
+
+INSERT INTO testUser.BOOKS (BOOK_SEQ, TITLE, TEXT_1)
+VALUES (1,'TEST1', 'TEST TEXT1');
