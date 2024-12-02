@@ -1,5 +1,6 @@
 package com.example.license.service;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.Locale;
 import java.util.Random;
 
@@ -56,5 +57,16 @@ public class LicenseService {
 		responseMessage = String.format(messages.getMessage("license.delete.message", null, null),licenseId, organizationId);
 		return responseMessage;
 
+	}
+	@CircuitBreaker(name = "myService", fallbackMethod = "fallback")
+	public String externalIntegration(String licenseId, String organizationId){
+		String responseMessage = null;
+		responseMessage = String.format(messages.getMessage("license.delete.message", null, null),licenseId, organizationId);
+		return responseMessage;
+
+	}
+
+	public String fallback(Throwable t) {
+		return "Fallback response due to: " + t.getMessage();
 	}
 }

@@ -17,3 +17,8 @@ include 'support:license-config'
 include 'client:client-license'
 include 'client:client-organization'
 
+project(':client').projectDir = file('client')
+project(':support').projectDir = file('support')
+project(':infra').projectDir = file('infra')
+project(':organization').projectDir = file('organization')
+project(':license').projectDir = file('license')

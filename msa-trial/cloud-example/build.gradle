@@ -27,8 +27,6 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'groovy'
-    apply plugin: 'com.google.cloud.tools.jib'
-
     group = 'com.yourcompany'
     version = '1.0-SNAPSHOT'
 
@@ -59,6 +57,9 @@ subprojects {
         springCloudVersion = rootProject.ext.springCloudVersion
         jibContainerVersion = rootProject.ext.jibContainerVersion
     }
+
+    bootJar.enabled = false
+    jar.enabled = true
 }
 
 group = "com.teamsimon"
@@ -105,6 +106,8 @@ task dockerDownAll(type: Exec) {
 
 task dockerRunAll(type: Exec) {
     dependsOn dockerDownAll
-    dependsOn subprojects*.jibDockerBuild
+    dependsOn subprojects.findAll { subproject ->
+        subproject.tasks.findByName('jibDockerBuild') != null
+    }*.jibDockerBuild
     commandLine 'docker-compose', 'up', '-d'
 }
