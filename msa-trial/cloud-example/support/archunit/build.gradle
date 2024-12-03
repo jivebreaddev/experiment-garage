@@ -1,0 +1,20 @@
+group = 'org.window'
+version = '0.0.1-SNAPSHOT'
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation  project(':client')
+    testImplementation project(':support')
+    testImplementation project(':infra')
+    testImplementation project(':organization')
+    testImplementation project(':license')
+
+    //archunit
+    testImplementation 'com.tngtech.archunit:archunit:1.1.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

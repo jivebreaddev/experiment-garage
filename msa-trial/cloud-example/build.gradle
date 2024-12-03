@@ -13,10 +13,15 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagement}"
     id 'com.google.cloud.tools.jib' version "${jibContainerVersion}" apply false
+    id 'jacoco'
 
 }
 
 allprojects {
+    group = 'com.yourcompany'
+    version = '1.0-SNAPSHOT'
+
+
     repositories {
         mavenCentral()
     }
@@ -27,8 +32,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'groovy'
-    group = 'com.yourcompany'
-    version = '1.0-SNAPSHOT'
+    apply plugin: 'jacoco'
 
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter"
@@ -40,7 +44,11 @@ subprojects {
         implementation("io.micrometer:micrometer-registry-prometheus")
 
     }
-
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
     test {
         useJUnitPlatform()
     }
@@ -111,3 +119,23 @@ task dockerRunAll(type: Exec) {
     }*.jibDockerBuild
     commandLine 'docker-compose', 'up', '-d'
 }
+
+tasks.named('test') {
+    useJUnitPlatform()
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        html.required = true
+        xml.required = false
+        csv.required = false
+    }
+
+    finalizedBy jacocoTestCoverageVerification
+}
+
+

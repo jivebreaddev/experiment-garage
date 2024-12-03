@@ -13,6 +13,7 @@ include 'support:monitoring'
 include 'support:spring-gateway'
 include 'support:eureka'
 include 'support:license-config'
+include 'support:archunit'
 
 include 'client:client-license'
 include 'client:client-organization'

@@ -61,5 +61,16 @@ jib {
         ports = ['8080']
         entrypoint = ['java', '-cp', '/app/resources:/app/classes:/app/libs/*', 'com.example.license.LicenseApplication']
 
+        // volumes = ["/tmp"]
+
+        mainClass = 'com.example.license.LicenseApplication'
+        jvmFlags = [
+                // '-Dspring.profiles.active=dev',
+                // '-Dfile.encoding=UTF-8',
+        ]
+
+        // allowInsecureRegistries = true
     }
-}
+    }
+
+
