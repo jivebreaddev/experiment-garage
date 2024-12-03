@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'io.spring.javaformat'
+
 }
 
 group = 'org.window'
