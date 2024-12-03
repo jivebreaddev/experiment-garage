@@ -1,5 +1,6 @@
 
 apply plugin: 'com.google.cloud.tools.jib'
+apply plugin: 'io.spring.javaformat'
 
 ext {
     springBootVersion = rootProject.ext.springBootVersion
