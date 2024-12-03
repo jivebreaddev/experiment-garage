@@ -23,4 +23,5 @@ class ArchunitApplicationTests {
     //        .resideInAPackage("com.example.project.moduleC..")
     //        .check(importedClasses);
     //  }
+  }
 }
