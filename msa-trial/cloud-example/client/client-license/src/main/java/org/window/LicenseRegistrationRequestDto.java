@@ -1,4 +1,4 @@
 package org.window;
 
-public record LicenseRegistrationRequestDto(String licenseId, String organizationId) {
+public record LicenseRegistrationRequestDto(String productType, Long quantity, String organizationId) {
 }
